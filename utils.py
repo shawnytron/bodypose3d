@@ -28,9 +28,9 @@ def DLT(P1, P2, point1, point2):
     #print(Vh[3,0:3]/Vh[3,3])
     return Vh[3,0:3]/Vh[3,3]
 
-def read_camera_parameters(camera_id):
+def read_camera_parameters(camera_id, savefolder = 'camera_parameters/'):
 
-    inf = open('camera_parameters/c' + str(camera_id) + '.dat', 'r')
+    inf = open(savefolder +'camera' + str(camera_id) + '_intrinsics.dat', 'r')
 
     cmtx = []
     dist = []
@@ -50,7 +50,7 @@ def read_camera_parameters(camera_id):
 
 def read_rotation_translation(camera_id, savefolder = 'camera_parameters/'):
 
-    inf = open(savefolder + 'rot_trans_c'+ str(camera_id) + '.dat', 'r')
+    inf = open(savefolder + 'camera' + str(camera_id) + '_rot_trans.dat', 'r')
 
     inf.readline()
     rot = []
