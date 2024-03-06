@@ -47,9 +47,9 @@ def visualize_3d(p3ds):
                 ax.plot(xs = [kpts3d[_c[0],0], kpts3d[_c[1],0]], ys = [kpts3d[_c[0],1], kpts3d[_c[1],1]], zs = [kpts3d[_c[0],2], kpts3d[_c[1],2]], linewidth = 4, c = part_color)
 
         #uncomment these if you want scatter plot of keypoints and their indices.
-        # for i in range(12):
-        #     #ax.text(kpts3d[i,0], kpts3d[i,1], kpts3d[i,2], str(i))
-        #     #ax.scatter(xs = kpts3d[i:i+1,0], ys = kpts3d[i:i+1,1], zs = kpts3d[i:i+1,2])
+        for i in range(12):
+             ax.text(kpts3d[i,0], kpts3d[i,1], kpts3d[i,2], str(i))
+             ax.scatter(xs = kpts3d[i:i+1,0], ys = kpts3d[i:i+1,1], zs = kpts3d[i:i+1,2])
 
 
         #ax.set_axis_off()
