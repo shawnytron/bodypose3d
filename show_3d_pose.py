@@ -1,7 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 from utils import DLT
-plt.style.use('ggplot')
+
+# Set Seaborn's default style
+sns.set_theme()
 
 
 pose_keypoints = np.array([16, 14, 12, 11, 13, 15, 24, 23, 25, 26, 27, 28])
