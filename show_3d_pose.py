@@ -25,9 +25,13 @@ def read_keypoints(filename):
     kpts = np.array(kpts)
     return kpts
 
+def calculate_origin_distance(kpts3d):
+    # Calculate the distance between the origin and the first point
+    first_point = kpts3d[0]
+    origin_distance = np.linalg.norm(first_point)
+    return origin_distance
 
 def visualize_3d(p3ds):
-
     """Now visualize in 3D"""
     torso = [[0, 1] , [1, 7], [7, 6], [6, 0]]
     armr = [[1, 3], [3, 5]]
@@ -37,39 +41,39 @@ def visualize_3d(p3ds):
     body = [torso, arml, armr, legr, legl]
     colors = ['red', 'blue', 'green', 'black', 'orange']
 
-    from mpl_toolkits.mplot3d import Axes3D
-
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
     for framenum, kpts3d in enumerate(p3ds):
-        if framenum%2 == 0: continue #skip every 2nd frame
+        if framenum % 2 == 0:
+            continue  # skip every 2nd frame
+
+        # Calculate the distance between the origin and the first point
+        origin_distance = calculate_origin_distance(kpts3d)
+
         for bodypart, part_color in zip(body, colors):
             for _c in bodypart:
-                ax.plot(xs = [kpts3d[_c[0],0], kpts3d[_c[1],0]], ys = [kpts3d[_c[0],1], kpts3d[_c[1],1]], zs = [kpts3d[_c[0],2], kpts3d[_c[1],2]], linewidth = 4, c = part_color)
+                ax.plot(xs=[kpts3d[_c[0], 0], kpts3d[_c[1], 0]], 
+                        ys=[kpts3d[_c[0], 1], kpts3d[_c[1], 1]], 
+                        zs=[kpts3d[_c[0], 2], kpts3d[_c[1], 2]], 
+                        linewidth=4, c=part_color)
 
-        #uncomment these if you want scatter plot of keypoints and their indices.
         for i in range(12):
-            ax.text(kpts3d[i,0], kpts3d[i,1], kpts3d[i,2], str(i))
-            ax.scatter(xs = kpts3d[i:i+1,0], ys = kpts3d[i:i+1,1], zs = kpts3d[i:i+1,2])
+            ax.text(kpts3d[i, 0], kpts3d[i, 1], kpts3d[i, 2], str(i))
+            ax.scatter(xs=kpts3d[i:i+1, 0], ys=kpts3d[i:i+1, 1], zs=kpts3d[i:i+1, 2])
 
-
-        #ax.set_axis_off()
-        ax.set_xticks([])
-        ax.set_yticks([])
-        ax.set_zticks([])
-
-        ax.set_xlim3d(-10, 10)
+        # Set axis limits based on origin distance
+        limit = 30
+        ax.set_xlim3d(-origin_distance - limit, origin_distance + limit)
         ax.set_xlabel('x')
-        ax.set_ylim3d(-10, 10)
+        ax.set_ylim3d(-origin_distance - limit, origin_distance + limit)
         ax.set_ylabel('y')
-        ax.set_zlim3d(-10, 10)
+        ax.set_zlim3d(-origin_distance - limit, origin_distance + limit)
         ax.set_zlabel('z')
+        
         plt.pause(0.1)
         ax.cla()
 
-
 if __name__ == '__main__':
-
     p3ds = read_keypoints('kpts_3d.dat')
     visualize_3d(p3ds)

@@ -119,11 +119,11 @@ def run_mp(input_stream1, input_stream2, P0, P1):
         kpts_3d.append(frame_p3ds)
 
         # uncomment these if you want to see the full keypoints detections
-        mp_drawing.draw_landmarks(frame0, results0.pose_landmarks, mp_pose.POSE_CONNECTIONS,
-                                  landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
-        
-        mp_drawing.draw_landmarks(frame1, results1.pose_landmarks, mp_pose.POSE_CONNECTIONS,
-                                  landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
+        # mp_drawing.draw_landmarks(frame0, results0.pose_landmarks, mp_pose.POSE_CONNECTIONS,
+        #                           landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
+        #
+        # mp_drawing.draw_landmarks(frame1, results1.pose_landmarks, mp_pose.POSE_CONNECTIONS,
+        #                           landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
 
         cv.imshow('cam1', frame1)
         cv.imshow('cam0', frame0)
