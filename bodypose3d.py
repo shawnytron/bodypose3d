@@ -140,23 +140,31 @@ def run_mp(input_stream1, input_stream2, P0, P1):
     return np.array(kpts_cam0), np.array(kpts_cam1), np.array(kpts_3d)
 
 if __name__ == '__main__':
-
-    #this will load the sample videos if no camera ID is given
+    
+    # Default input streams if no command-line argument provided
     input_stream1 = 'media/cam0_test.mp4'
-    input_stream2 = 'media/cam1_test.mp4'
+    input_stream2 = 'media/cam0_test.mp4'
 
-    #put camera id as command line arguements
-    if len(sys.argv) == 3:
-        input_stream1 = int(sys.argv[1])
-        input_stream2 = int(sys.argv[2])
+    # Parse participant ID from command line argument
+    if len(sys.argv) == 2:
+        participant_id = sys.argv[1]  # Get the participant ID from command line
+        input_stream1 = f'media/cam0_participant_p{participant_id}.mp4'
+        input_stream2 = f'media/cam0_participant_p{participant_id}.mp4'
 
-    #get projection matrices
+    # Get projection matrices
     P0 = get_projection_matrix(0)
     P1 = get_projection_matrix(1)
 
+    # Run multi-camera pose estimation
     kpts_cam0, kpts_cam1, kpts_3d = run_mp(input_stream1, input_stream2, P0, P1)
 
-    #this will create keypoints file in current working folder
-    write_keypoints_to_disk('kpts_cam0.dat', kpts_cam0)
-    write_keypoints_to_disk('kpts_cam1.dat', kpts_cam1)
-    write_keypoints_to_disk('kpts_3d.dat', kpts_3d)
+    # Save keypoints to files with participant number extension or without it
+    if len(sys.argv) == 2:
+        participant_id = sys.argv[1]
+        write_keypoints_to_disk(f'kpts_cam0_p{participant_id}.dat', kpts_cam0)
+        write_keypoints_to_disk(f'kpts_cam1_p{participant_id}.dat', kpts_cam1)
+        write_keypoints_to_disk(f'kpts_3d_p{participant_id}.dat', kpts_3d)
+    else:
+        write_keypoints_to_disk('kpts_cam0.dat', kpts_cam0)
+        write_keypoints_to_disk('kpts_cam1.dat', kpts_cam1)
+        write_keypoints_to_disk('kpts_3d.dat', kpts_3d)

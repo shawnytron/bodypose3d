@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from utils import DLT
+import sys
 
 # Set Seaborn's default style
 sns.set_theme()
@@ -75,5 +76,14 @@ def visualize_3d(p3ds):
         ax.cla()
 
 if __name__ == '__main__':
-    p3ds = read_keypoints('kpts_3d.dat')
+    participant_id = None
+    if len(sys.argv) == 2:
+        participant_id = sys.argv[1]
+    
+    if participant_id:
+        filename = f'kpts_3d_p{participant_id}.dat'
+    else:
+        filename = 'kpts_3d.dat'
+
+    p3ds = read_keypoints(filename)
     visualize_3d(p3ds)
