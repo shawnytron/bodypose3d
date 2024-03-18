@@ -8,7 +8,7 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_pose = mp.solutions.pose
 
-frame_shape = [720, 1280]
+frame_shape = [1280, 720]
 
 #add here if you need more keypoints
 pose_keypoints = [16, 14, 12, 11, 13, 15, 24, 23, 25, 26, 27, 28]
@@ -125,8 +125,8 @@ def run_mp(input_stream1, input_stream2, P0, P1):
         # mp_drawing.draw_landmarks(frame1, results1.pose_landmarks, mp_pose.POSE_CONNECTIONS,
         #                           landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
 
-        cv.imshow('cam1', frame1)
-        cv.imshow('cam0', frame0)
+        cv.imshow('video_cam0', frame0)
+        cv.imshow('video_cam1', frame1)
 
         k = cv.waitKey(1)
         if k & 0xFF == 27: break #27 is ESC key.
@@ -143,14 +143,18 @@ if __name__ == '__main__':
     
     # Default input streams if no command-line argument provided
     input_stream1 = 'media/cam0_test.mp4'
-    input_stream2 = 'media/cam0_test.mp4'
+    input_stream2 = 'media/cam1_test.mp4'
 
     # Parse participant ID from command line argument
     if len(sys.argv) == 2:
-        participant_id = sys.argv[1]  # Get the participant ID from command line
-        input_stream1 = f'media/cam0_participant_p{participant_id}.mp4'
-        input_stream2 = f'media/cam0_participant_p{participant_id}.mp4'
-
+        participant_id = int(sys.argv[1])  # Get the participant ID from command line
+        input_stream1 = f'media/cam0_participant_p{participant_id}/video_cam0.mp4'
+        input_stream2 = f'media/cam1_participant_p{participant_id}/video_cam1.mp4'
+    else: 
+        # Default input streams if no command-line argument provided
+        input_stream1 = 'media/cam0_test.mp4'
+        input_stream2 = 'media/cam1_test.mp4'
+    
     # Get projection matrices
     P0 = get_projection_matrix(0)
     P1 = get_projection_matrix(1)
