@@ -8,7 +8,7 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_pose = mp.solutions.pose
 
-frame_shape = [1280, 720]
+frame_shape = [640, 480]
 
 #add here if you need more keypoints
 pose_keypoints = [16, 14, 12, 11, 13, 15, 24, 23, 25, 26, 27, 28]
@@ -34,18 +34,17 @@ def run_mp(input_stream1, input_stream2, P0, P1):
     kpts_cam1 = []
     kpts_3d = []
     while True:
-
-        #read frames from stream
+        # Read frames from stream
         ret0, frame0 = cap0.read()
         ret1, frame1 = cap1.read()
 
-        if not ret0 or not ret1: break
+        if not ret0 or not ret1:
+            break
 
-        #crop to 720x720.
-        #Note: camera calibration parameters are set to this resolution.If you change this, make sure to also change camera intrinsic parameters
-        if frame0.shape[1] != 720:
-            frame0 = frame0[:,frame_shape[1]//2 - frame_shape[0]//2:frame_shape[1]//2 + frame_shape[0]//2]
-            frame1 = frame1[:,frame_shape[1]//2 - frame_shape[0]//2:frame_shape[1]//2 + frame_shape[0]//2]
+        # Crop frames to 640x480
+        if frame0.shape[1] != 640:
+            frame0 = frame0[:, frame_shape[1] // 2 - frame_shape[0] // 2:frame_shape[1] // 2 + frame_shape[0] // 2]
+            frame1 = frame1[:, frame_shape[1] // 2 - frame_shape[0] // 2:frame_shape[1] // 2 + frame_shape[0] // 2]
 
         # the BGR image to RGB.
         frame0 = cv.cvtColor(frame0, cv.COLOR_BGR2RGB)

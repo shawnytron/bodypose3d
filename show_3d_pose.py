@@ -26,11 +26,11 @@ def read_keypoints(filename):
     kpts = np.array(kpts)
     return kpts
 
-def calculate_origin_distance(kpts3d):
-    # Calculate the distance between the origin and the first point
-    first_point = kpts3d[0]
-    origin_distance = np.linalg.norm(first_point)
-    return origin_distance
+# def calculate_origin_distance(kpts3d):
+#     # Calculate the distance between the origin and the first point
+#     first_point = kpts3d[0]
+#     origin_distance = np.linalg.norm(first_point)
+#     return origin_distance
 
 def visualize_3d(p3ds):
     """Now visualize in 3D"""
@@ -50,7 +50,7 @@ def visualize_3d(p3ds):
             continue  # skip every 2nd frame
 
         # Calculate the distance between the origin and the first point
-        origin_distance = calculate_origin_distance(kpts3d)
+        # origin_distance = calculate_origin_distance(kpts3d)
 
         for bodypart, part_color in zip(body, colors):
             for _c in bodypart:
@@ -59,18 +59,20 @@ def visualize_3d(p3ds):
                         zs=[kpts3d[_c[0], 2], kpts3d[_c[1], 2]], 
                         linewidth=4, c=part_color)
 
-        for i in range(12):
-            ax.text(kpts3d[i, 0], kpts3d[i, 1], kpts3d[i, 2], str(i))
-            ax.scatter(xs=kpts3d[i:i+1, 0], ys=kpts3d[i:i+1, 1], zs=kpts3d[i:i+1, 2])
+        # for i in range(12):
+        #     ax.text(kpts3d[i, 0], kpts3d[i, 1], kpts3d[i, 2], str(i))
+        #     ax.scatter(xs=kpts3d[i:i+1, 0], ys=kpts3d[i:i+1, 1], zs=kpts3d[i:i+1, 2])
 
         # Set axis limits based on origin distance
-        limit = 30
-        ax.set_xlim3d(-origin_distance - limit, origin_distance + limit)
+        # Set axis limits based on origin distance
+        limit = 60  # Adjust this limit as per your requirement
+        ax.set_xlim3d(-limit, limit)
         ax.set_xlabel('x')
-        ax.set_ylim3d(-origin_distance - limit, origin_distance + limit)
+        ax.set_ylim3d(-limit, limit)
         ax.set_ylabel('y')
-        ax.set_zlim3d(-origin_distance - limit, origin_distance + limit)
+        ax.set_zlim3d(-limit, limit)
         ax.set_zlabel('z')
+
         
         plt.pause(0.1)
         ax.cla()

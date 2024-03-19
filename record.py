@@ -26,8 +26,8 @@ def record_video(participant_number):
 
     # Define video codecs and output video writers
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out0 = cv2.VideoWriter(f"{cam0_folder}/video_cam0.mp4", fourcc, 30.0, (1280, 720))
-    out1 = cv2.VideoWriter(f"{cam1_folder}/video_cam1.mp4", fourcc, 30.0, (1280, 720))
+    out0 = cv2.VideoWriter(f"{cam0_folder}/video_cam0.mp4", fourcc, 30.0, (640, 480))
+    out1 = cv2.VideoWriter(f"{cam1_folder}/video_cam1.mp4", fourcc, 30.0, (640, 480))
 
     while True:
         # Capture frame from cameras
